@@ -1,0 +1,156 @@
+
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  
+}
+
+.day-of-week{
+display: grid;
+grid-template-columns: repeat(7, 1fr);
+
+}
+
+.ned{
+    margin-left: 110px;
+}
+
+.pon{
+    margin-left: 100px;
+}
+
+.tor{
+    margin-left: 100px;
+}
+
+.sre{
+    margin-left: 90px;
+}
+
+.cet{
+    margin-left: 80px;
+}
+
+.pet{
+    margin-left: 80px;
+}
+
+.sob{
+    margin-left: 70px;
+}
+
+
+
+.dan{
+    
+}
+
+body{
+    height: 1000px;
+}
+
+.day-of-week{
+    margin-top: 20px;
+}
+
+.container{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+#leto{
+    width: 75%;
+    margin-left: 200px;
+    background-color: wheat;
+    margin-top: 50px;
+}
+
+#label{
+    margin-left: 200px;
+}
+
+#datum{
+    width: 75%;
+    margin-left: 200px;
+    background-color: wheat;
+    margin-top: 50px;
+}
+
+.containerInput1{
+    padding: 50px;
+    background-color: yellowgreen;
+    border-radius: 2%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+.square {
+    width: 210px;
+    height: 70px;
+    background-color: blueviolet;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    text-align: center;
+    color:white;
+}
+
+.square-praznik{
+    width: 210px;
+    height: 70px;
+    background-color: yellow;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    text-align: center;
+    color:black;
+}
+
+#potrdi1{
+    margin-left: 1210px;
+}
+
+.select
+{
+    margin-left: 20px;
+}
+
+.square-prejsnji{
+    width: 210px;
+    height: 70px;
+    background-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    text-align: center;
+    color:white;
+}
+
+.square-nedelja{
+    width: 210px;
+    height: 70px;
+    background-color: red;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    text-align: center;
+    justify-content: center;
+    color:white;
+}
+
+#potrdi2{
+    margin-left: 1210px;
+    margin-top: 20px;
+}
+
+.calContainer{
+    background-color: lightpink;
+}
+
+
+
+
+
+
+

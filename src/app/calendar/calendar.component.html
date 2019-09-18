@@ -1,0 +1,77 @@
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<body>
+    <div class="containerInput1">
+        <form (ngSubmit) ="izberi()">
+            <div class="form-group">
+              <input name="leto" [(ngModel)]="this.leto" class="form-control" id="leto" placeholder="Vnesite leto">
+            </div>
+          
+          
+            
+            <label id="label">Izberite mesec:</label>
+            <select class="select" name="mesec" [(ngModel)]="this.mesec">
+    
+              <option value="1">Januar</option>
+              <option value="2">Februar</option>
+              <option value="3">Mart</option>
+              <option value="4">April</option>
+              <option value="5">Maj</option>
+              <option value="6">Junij</option>
+              <option value="7">Julij</option>
+              <option value="8">Avgust</option>
+              <option value="9">September</option>
+              <option value="10">Oktober</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+          
+            <button type="submit" class="btn btn-secondary" id="potrdi1" (onclick)="izberi()">Potrdi</button>
+          </form>
+    </div>
+    
+    
+    
+    <div class="containerInput1">
+        <form (ngSubmit) = "izberiDatum()">
+            <div class="containerDatum">
+              <input name="datum" [(ngModel)]="this.datumIzbira" name="datumizbira" class="form-control" id = "datum" placeholder="Vnesite datum v obliki dd.mm.llll">
+            </div>
+            <button type="submit" class="btn btn-secondary" id="potrdi2">Potrdi</button>
+          </form>
+    </div>
+    
+    <div class="calContainer">
+      <div class="day-grid">
+          <div *ngIf="jeIzbrano" class="day-of-week">
+              <div class="ned">Nedelja</div>
+              <div class="pon">Ponedeljek</div>
+              <div class="tor">Torek</div>
+              <div class="sre">Sreda</div>
+              <div class="cet">Četrtek</div>
+              <div class="pet">Petek</div>
+              <div class="sob">Sobota</div>
+            </div>
+      </div>
+          <div class="container">
+            <div class="date-grid" *ngIf="jeIzbrano">
+              <div [ngClass]="{'square-prejsnji' : day.aliJePrejsnjiMesec && day.aliJeNedelja==false, 'square-nedelja':day.aliJeNedelja==true, 'square':day.aliJePrejsnjiMesec==false && day.aliJeNedelja==false, 'square-praznik' : day.aliJePraznik == true}"  *ngFor="let day of this.dnevi"><time>{{day.danVMesecu}}</time></div>
+            </div>
+          </div>
+
+
+          <small *ngIf="jeIzbrano">PRAZNIKI</small>
+          <small *ngIf="jeIzbrano">DNEVI V IZBRANEM MESECU</small>
+          <small *ngIf="jeIzbrano">DNEVI V PREJŠNJEM MESECU</small>
+          <small *ngIf="jeIzbrano">NEDELJE</small>
+    </div>
+</body>
+
+
+
+
+
+
