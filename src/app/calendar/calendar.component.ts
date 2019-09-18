@@ -40,20 +40,14 @@ export class CalendarComponent implements OnInit {
   constructor(private http:Http) { }
 
   ngOnInit() {
-    /*this.http.get('./assets/text.txt').subscribe(data => {
-      this.text = (<any>data)._body);
-    });*/
 
     this.http.get('./assets/text.txt').subscribe(data => {
       this.text=((<any>data)._body);
       this.prazniki = this.text.split('\n');
-      console.log(this.prazniki);
-    })
-      
-    
+    });
     this.jeIzbrano  = false;
     this.dnevi = [];
-    console.log(this.text);
+    
   }
 
 
@@ -65,7 +59,6 @@ export class CalendarComponent implements OnInit {
 
     if(this.mesec == '1' || this.mesec == '3' || this.mesec == '5' 
         || this.mesec == '7' || this.mesec == '8' || this.mesec == '10' || this.mesec =='12'){
-          
       this.steviloDniVMesecu = 31;
 
     }else
@@ -94,7 +87,7 @@ export class CalendarComponent implements OnInit {
        dan.aliJeNedelja = true;
       }
       if(this.preveriAliJePraznik(dan)){
-        console.log("imamo praznik");
+       
         dan.aliJePraznik = true;
       }
       this.dnevi.push(dan);
@@ -105,7 +98,6 @@ export class CalendarComponent implements OnInit {
     datum.setMonth(this.mesecStevilka-1);
     datum.setFullYear(this.leto);
     this.danVTednu = datum.getDay();
-    
 
     var prejsnjiMesec;
     var leto = this.leto;
@@ -126,7 +118,6 @@ export class CalendarComponent implements OnInit {
 
 
   izracunZadnjihDnevPrejsnjegaMeseca(prejsnjiMesec:number, steviloZadnjihDnevi:number, leto:number) : Dan[]{
-    console.log("prejsnji mesec jee," + prejsnjiMesec);
     var dnevi = [];
     var steviloDnevi = 0;
     if(prejsnjiMesec == 1 || prejsnjiMesec == 3 || prejsnjiMesec == 5 
@@ -169,41 +160,32 @@ export class CalendarComponent implements OnInit {
   }
 
   preveriAliJePraznik(dan : Dan) : boolean {
-    console.log(this.prazniki);
-    console.log(this.prazniki[1]);
+  
     for(var i = 0; i < this.prazniki.length; i++){
-      console.log(this.prazniki[i]);
-       console.log(this.prazniki.length);
        var day:number= +this.prazniki[i].split('.')[0];
        var month:number = +this.prazniki[i].split('.')[1];
        var year:number = +this.prazniki[i].split('.')[2];
        var ponavljajoci = false;
-      
-       console.log(this.prazniki[i].split('.')[3]);
        if(this.prazniki[i].split('.').length == 4){
-         console.log("trueee");
          ponavljajoci = true;
        }
 
        if(ponavljajoci == false){
          if(dan.danVMesecu == day && +dan.mesec == month && dan.leto == year){
-           console.log("trueee2");
             return true;
          }
        }
-       console.log(ponavljajoci);
        if(ponavljajoci == true){
          if(i == 0){
-          console.log(dan.danVMesecu+ ", " + dan.mesec);
-          console.log(day + ", " + month);
+         
          }
        
          if(dan.danVMesecu == day && +dan.mesec == month){
-          console.log("true jee");
+          
            return true;
          }
        }
-       console.log("ugh stigo sam");
+       
 
     }
     return false;

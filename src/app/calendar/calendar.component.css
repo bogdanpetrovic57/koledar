@@ -79,7 +79,7 @@ body{
 .containerInput1{
     padding: 50px;
     background-color: yellowgreen;
-    border-radius: 2%;
+    border-radius: 1%;
     border-style: solid;
     border-width: 2px;
     border-color: black;
@@ -147,6 +147,64 @@ body{
 .calContainer{
     background-color: lightpink;
 }
+
+#legendaPrazniki{
+    margin-left: 500px;
+}
+
+#legendaDnevi{
+    margin-left: 100px;
+}
+
+#legendaPrejsnjiDnevi{
+    margin-left: 100px;
+}
+
+#legendaNedelje{
+    margin-left: 100px;
+}
+
+.legendaPrazniki{
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    margin-top: 5px;
+}
+
+.legendaDnevi{
+    width: 20px;
+    height: 20px;
+    background-color: blueviolet;
+    margin-top: 5px;
+}
+
+.legendaPrejsnjiDnevi{
+    width: 20px;
+    height: 20px;
+    background-color: gray;
+    margin-top: 5px;
+}
+
+.legendaNedelje{
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    margin-top: 5px;
+}
+
+small{
+    margin-top:5px;
+}
+
+table{
+    margin-left: 700px;
+}
+
+tr{
+    margin-top: 10px;
+}
+
+
 
 
 
