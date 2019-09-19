@@ -62,7 +62,8 @@
           <div class="container">
             <div class="date-grid" *ngIf="jeIzbrano">
               <div [ngClass]="{'square-prejsnji' : day.aliJePrejsnjiMesec && day.aliJeNedelja==false, 'square-nedelja':day.aliJeNedelja==true, 
-                'square':day.aliJePrejsnjiMesec==false && day.aliJeNedelja==false, 'square-praznik' : day.aliJePraznik == true, 'square-izbrani' : day.aliJeIzbran == true}"  *ngFor="let day of this.dnevi"><time>{{day.danVMesecu}}</time></div>
+                'square':day.aliJePrejsnjiMesec==false && day.aliJeNedelja==false, 
+                'square-praznik' : day.aliJePraznik == true, 'square-izbrani' : day.aliJeIzbran == true}"  *ngFor="let day of this.dnevi"><time>{{day.danVMesecu}}</time></div>
             </div>
           </div>
 

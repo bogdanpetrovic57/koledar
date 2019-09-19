@@ -330,7 +330,6 @@ export class CalendarComponent implements OnInit {
     }
 
     return true;
-    
   }
 
   preveriAliJeVnosLetaInMesecaVeljaven(){
