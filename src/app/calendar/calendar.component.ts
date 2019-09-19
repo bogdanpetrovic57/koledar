@@ -48,6 +48,7 @@ export class CalendarComponent implements OnInit {
   /* Te spremenljivke služijo uporabniku izpisati izbrani mesec in leto.*/
   mesecZaIzpis : string;
   letoZaIzpis : number;
+  koledarZaprt : boolean;
  
 
   text: any;
@@ -72,7 +73,11 @@ export class CalendarComponent implements OnInit {
     this.datumIzbira = "";
     this.jeIzbrano  = false;
     this.dnevi = [];
-    
+  }
+
+  zapriKoledar(){
+    console.log("pokusavam");
+    this.jeIzbrano = false;
   }
 
 
@@ -86,6 +91,7 @@ export class CalendarComponent implements OnInit {
     /*Izračunamo število dni določenega meseca v določenemu letu*/
     this.mesec = ""+(+this.mesec);
     console.log(this.mesec);
+    console.log(this.izbraniDan);
     if(this.mesec == '1' || this.mesec == '3' || this.mesec == '5' 
         || this.mesec == '7' || this.mesec == '8' || this.mesec == '10' || this.mesec =='12'){
       this.steviloDniVMesecu = 31;

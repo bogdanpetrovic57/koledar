@@ -1,6 +1,8 @@
 
 <body>
     <div class="containerInput1">
+
+        <button *ngIf="jeIzbrano" type="click" (click)="zapriKoledar()" class="btn btn-secondary" id="zapri">Zapri koledar</button>
         <form (ngSubmit) ="izberi()">
             <div class="form-group">
               <input name="leto" [(ngModel)]="this.leto" class="form-control" id="leto" placeholder="Vnesite leto">
