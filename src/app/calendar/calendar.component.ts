@@ -12,10 +12,13 @@ import { LowerCasePipe } from '@angular/common';
 export class CalendarComponent implements OnInit {
 
 /*Spodaj je en enostavni program koledarja. Kot je vidno, izdelan je z uporabo Angular tehnologije. Za izboljšavo HTML 
-  kode sem se poslužil z Bootstrap-om. Obstajata dva načina vnosa in izbire mesecev. 
+  kode sem se poslužil z Bootstrap-om in CSS-om. Obstajata dva načina vnosa in izbire mesecev. 
   Uporabnik lahko preko combo-boxa izbere določeni mesec in v polje vpiše leto, drugi način je pa da v polje vnese 
-  celoten datum. Ko ni uporabnikovega vnosa, koledar je skrit in se pokaže, ko je gumb "Potrdi" aktiven.
-  
+  celoten datum. V drugemu primeru, ko program ve točen datum, se ta dan v mesecu obkroži z zeleno barvo.
+   Ko ni uporabnikovega vnosa, koledar je skrit in se pokaže ko je gumb "Potrdi" aktiven.
+
+   Ob aktiviranju koledarja nam se na vrhu strani pokaže gumb "Zapri koledar" ki zapre koledar.
+
   Za določanje dnevov sem naredil en model "Dan", ki v sebi hrani podatke :
     -število danVMesecu
     -število leto
@@ -23,9 +26,13 @@ export class CalendarComponent implements OnInit {
     -boolean aliJePraznik
     -boolean aliJeNedelja
     -boolean aliJePrejsnjiMesec
+    -boolean aliJeIzbran --ta boolean določi ali je pri vnosu datuma uporabnik izbral ta dan, kar bomo
+      označili z rumeno barvo.
 
 
     Gumba "Potrdi" sta onemogočena dokler program ne potrdi veljavnost vnosov.
+
+
   */
 
 
@@ -45,11 +52,11 @@ export class CalendarComponent implements OnInit {
   
   izbraniDan: number;
 
-  /* Te spremenljivke služijo uporabniku izpisati izbrani mesec in leto.*/
-  mesecZaIzpis : string;
-  letoZaIzpis : number;
-  koledarZaprt : boolean;
- 
+  /* Te spremenljivke služijo, da se zraven koledarja uporabniku izpišejo izbrani mesec in leto.*/
+  mesecZaIzpis: string;
+  letoZaIzpis: number;
+  koledarZaprt: boolean;
+
 
   text: any;
 
@@ -63,12 +70,13 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     /* Ta delček kode iz "assets" direktorija pridobi tekstualno datoteko, prebere je, in podatke shrani
-      v spremenljivko "this.prazniki". Izvaja se ob začetku programa.*/
+      v spremenljivko "this.prazniki". Kot je vidno, izvaja se ob začetku programa.*/
     this.http.get('./assets/text.txt').subscribe(data => {
       this.text=((<any>data)._body);
       this.prazniki = this.text.split('\n');
     });
-    /* Omogoča skritost koledarja. Ob pritisku na gumb "Potrdi", se spremenljivka "jeIzbrano" spremeni v true
+    /* Boolean "jeIzbrano" omogoča skritost koledarja. Ob pritisku na gumb 
+      "Potrdi", se spremenljivka "jeIzbrano" spremeni v true
       in se koledar prikaže */
     this.datumIzbira = "";
     this.jeIzbrano  = false;
@@ -76,7 +84,6 @@ export class CalendarComponent implements OnInit {
   }
 
   zapriKoledar(){
-    console.log("pokusavam");
     this.jeIzbrano = false;
   }
 
@@ -90,28 +97,25 @@ export class CalendarComponent implements OnInit {
     this.dnevi = [];
     /*Izračunamo število dni določenega meseca v določenemu letu*/
     this.mesec = ""+(+this.mesec);
-    console.log(this.mesec);
-    console.log(this.izbraniDan);
     if(this.mesec == '1' || this.mesec == '3' || this.mesec == '5' 
         || this.mesec == '7' || this.mesec == '8' || this.mesec == '10' || this.mesec =='12'){
       this.steviloDniVMesecu = 31;
 
     }else
     /*Vsako četrto leto je prestopno, s tem da je vsako 100-to leto prestopno samo v primeru če je deljivo z 400.
-      Prestopnost leta se seveda odrazi samo v februarju.*/
+      Prestopnost leta se seveda odrazi samo na število dni v februarju.*/
     if(this.mesec === '2'){
       if((this.leto % 4 === 0) && (this.leto % 100 !== 0) || (this.leto % 400 === 0)){
         this.steviloDniVMesecu = 29;
       }else{
         this.steviloDniVMesecu = 28;
       }
-    
     }else{
       this.steviloDniVMesecu = 30;
     }
     /*Spodaj iteriramo skozi dneve in delamo objekte tipa Dan. Za vsak objekt je znano leto, mesec in dan v mesecu.
       S temi podatki lahko preverimo ali je leto nedelja ali praznik. Če je, potem to označimo v booleanu "aliJeNedelja",
-        oziroma "aliJePraznik*/
+        oziroma "aliJePraznik" in "aliJeIzbran"*/
     this.mesecStevilka = +this.mesec;
     for(var i = 1; i <= this.steviloDniVMesecu; i++){
       let dan = {} as Dan;
@@ -151,7 +155,7 @@ export class CalendarComponent implements OnInit {
     this.danVTednu = datum.getDay();
 
     /* Ko nam se zgodi, da se mesec ne začne točno v nedeljo, potem do 1. v izbranemu mesecu moramo dodati
-      nekaj dni iz prejšnjega meseca. To izračunamo kot this.mesec - 1 in v slučaju da smo izbrali januar
+      nekaj dni iz prejšnjega meseca. Prejšnji mesec izračunamo kot this.mesec - 1 in v slučaju da smo izbrali januar
       this.mesec je 12, zmanjša se pa leto za 1.*/
     var prejsnjiMesec;
     var leto = this.leto;
@@ -264,8 +268,6 @@ export class CalendarComponent implements OnInit {
   }
 
   preveriAliJeNedelja(day: Dan){
-
-
     var datum = new Date;
     datum.setDate(day.danVMesecu);
     datum.setMonth(+day.mesec - 1);
@@ -281,6 +283,8 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
+  /*V prvem vnosnem polju nam je pomembno ali je leto veljavno. Prvi gumb bo onemogočen vse dokler 
+    funkcija ne vrni true. */
   preveriAliJeVnosVeljaven() : boolean{
     if(this.leto > 0){
       return true;
@@ -288,30 +292,29 @@ export class CalendarComponent implements OnInit {
     return false;
   }
 
+  /*Pri preverjanju drugega vnosnega polja, moramo preveriti ali so dan, mesec in leto veljavni. Kar se tiče meseca,
+    moramo preveriti če je manjši od 1, ali večji od 12. Za dneve moramo preveriti ali je manjši od 0, ali večji od 31, če
+    je mesec eden izmed mesecev ki vsebujejo 31 dni. V primeru da je mesec = 2, kar pomeni da je izbran februar,
+      najprej moramo preveriti ali je leto prestopno. Če je, ostaje nam preveriti ali je izbrani dan < 1 ali > 29.
+      V neprestopnemu letu, namesto > 29 preverjamo ali je > 28.*/
   preveriAliJeVnosDatumaVeljaven() : boolean {
     if(this.datumIzbira == ""){
       return false;
     }
     var podatki = this.datumIzbira.split('.');
     if(podatki.length < 3){
-      console.log("podatki ne valjaju");
       return false;
     }
     var mesec = 0+podatki[1];
     var leto = +podatki[2];
     var izbraniDan = +podatki[0];
-    //septembar april jun novembar
     if((mesec == null) || (+mesec < 1) || (+mesec > 12) || (leto == null) || (leto < 1) || 
      (izbraniDan == null) || (izbraniDan < 1) || (izbraniDan > 31)){
-      console.log(mesec);
-       console.log("izbrani ne valjaju");
         return false;
     }
 
     if(+mesec == 9 || +mesec == 4 || +mesec == 6 || +mesec == 11){
       if(izbraniDan > 30){
-        console.log(mesec);
-        console.log("izbrani dan ne valja");
         return false;
       }
     }
@@ -323,7 +326,6 @@ export class CalendarComponent implements OnInit {
       }
     }else{
       if(izbraniDan > 28){
-        console.log("ovde ne vala2");
         return false;
       }
     }
