@@ -25,10 +25,12 @@
               <option value="12">December</option>
             </select>
           
-            <button type="submit" class="btn btn-secondary" id="potrdi1" (onclick)="izberi()">Potrdi</button>
+            <button [disabled]="!preveriAliJeVnosLetaInMesecaVeljaven()" type="submit" class="btn btn-secondary" id="potrdi1" (onclick)="izberi()">Potrdi</button>
           </form>
     </div>
     
+    
+
     
     
     <div class="containerInput1">
@@ -36,13 +38,16 @@
             <div class="containerDatum">
               <input name="datum" [(ngModel)]="this.datumIzbira" name="datumizbira" class="form-control" id = "datum" placeholder="Vnesite datum v obliki dd.mm.llll">
             </div>
-            <button type="submit" class="btn btn-secondary" id="potrdi2">Potrdi</button>
+            <button [disabled]="!preveriAliJeVnosDatumaVeljaven()" type="submit" class="btn btn-secondary" id="potrdi2">Potrdi</button>
           </form>
     </div>
+
     
-    <div class="calContainer">
+    
+    <div *ngIf="jeIzbrano" class="calContainer">
+        <h3>{{mesecZaIzpis}},  {{letoZaIzpis}}</h3>
       <div class="day-grid">
-          <div *ngIf="jeIzbrano" class="day-of-week">
+          <div *ngIf="jeIzbrano" class="danTeden">
               <div class="ned">Nedelja</div>
               <div class="pon">Ponedeljek</div>
               <div class="tor">Torek</div>
@@ -54,7 +59,8 @@
       </div>
           <div class="container">
             <div class="date-grid" *ngIf="jeIzbrano">
-              <div [ngClass]="{'square-prejsnji' : day.aliJePrejsnjiMesec && day.aliJeNedelja==false, 'square-nedelja':day.aliJeNedelja==true, 'square':day.aliJePrejsnjiMesec==false && day.aliJeNedelja==false, 'square-praznik' : day.aliJePraznik == true}"  *ngFor="let day of this.dnevi"><time>{{day.danVMesecu}}</time></div>
+              <div [ngClass]="{'square-prejsnji' : day.aliJePrejsnjiMesec && day.aliJeNedelja==false, 'square-nedelja':day.aliJeNedelja==true, 
+                'square':day.aliJePrejsnjiMesec==false && day.aliJeNedelja==false, 'square-praznik' : day.aliJePraznik == true, 'square-izbrani' : day.aliJeIzbran == true}"  *ngFor="let day of this.dnevi"><time>{{day.danVMesecu}}</time></div>
             </div>
           </div>
 

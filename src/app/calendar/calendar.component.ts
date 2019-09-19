@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Dan } from 'models/dan';
 import { HttpModule, Http, ResponseType } from '@angular/http';
+import { LowerCasePipe } from '@angular/common';
 
 
 @Component({
@@ -38,7 +39,13 @@ export class CalendarComponent implements OnInit {
   jeIzbrano: Boolean;
   
   prazniki: string;
+  
   izbraniDan: number;
+
+  /* Te spremenljivke služijo uporabniku izpisati izbrani mesec in leto.*/
+  mesecZaIzpis : string;
+  letoZaIzpis : number;
+ 
 
   text: any;
 
@@ -59,8 +66,10 @@ export class CalendarComponent implements OnInit {
     });
     /* Omogoča skritost koledarja. Ob pritisku na gumb "Potrdi", se spremenljivka "jeIzbrano" spremeni v true
       in se koledar prikaže */
+    this.datumIzbira = "";
     this.jeIzbrano  = false;
     this.dnevi = [];
+    
   }
 
 
@@ -69,6 +78,7 @@ export class CalendarComponent implements OnInit {
   /*Izberi() je glavna funkcija v programu, in je njena vloga da uporabnikov unos prebere, obdela, izračuna potrebne
    podatke za prikaz koledarja in omogoči prikaz. */
   izberi(){
+
     this.dnevi = [];
     /*Izračunamo število dni določenega meseca v določenemu letu*/
     if(this.mesec == '1' || this.mesec == '3' || this.mesec == '5' 
@@ -101,20 +111,29 @@ export class CalendarComponent implements OnInit {
       dan.aliJeNedelja=false;
       dan.aliJePraznik=false;
       if(this.preveriAliJeNedelja(dan)){
-        
+
        dan.aliJeNedelja = true;
       }
+
       if(this.preveriAliJePraznik(dan)){
-       
+
         dan.aliJePraznik = true;
+      }
+
+      if(this.izbraniDan == dan.danVMesecu){
+        dan.aliJeIzbran = true;
+        this.izbraniDan = 0;
       }
       /*Dodamo v seznam*/
       this.dnevi.push(dan);
+      this.mesecZaIzpis = this.meseci[+this.mesec-1].charAt(0).toUpperCase() +
+        this.meseci[+this.mesec-1].slice(1);
+      this.letoZaIzpis = this.leto;
     }
 
     /*Spodaj z uporabo tipa Date lahko dobimo dan v tednu določenega datuma. */
     var datum = new Date;
-  
+
     datum.setDate(1);
     datum.setMonth(this.mesecStevilka-1);
     datum.setFullYear(this.leto);
@@ -180,15 +199,26 @@ export class CalendarComponent implements OnInit {
     return dnevi;
   }
 
+
+
+
+
+
+
   /* Funkcija ki se kliče ob vnosu v polje datuma. Iz string-a ki ga dobimo iz vmesnika z pomočjo funkcije split
     lahko izberemo potrebne podatke, in pokličemo funkcijo izberi(), ki bo podatke dalj obdelala.*/
   izberiDatum(){
-    var podatki = this.datumIzbira.split('.');
-    this.mesec = 0+podatki[1];
-    this.leto = +podatki[2];
-    this.izbraniDan = +podatki[0];
+    
+      if(this.datumIzbira === undefined){
+        return false;
+      }
+      var podatki = this.datumIzbira.split('.');
+      this.mesec = 0+podatki[1];
+      this.leto = +podatki[2];
+      this.izbraniDan = +podatki[0];
 
-    this.izberi();
+      this.izberi();
+    
   }
   /* Na začetku imamo pripravljen seznam stringov "prazniki". Iteriramo skozi seznam in preverjamo ali je 
     praznik ponavljajoč, kar je označeno z "*" na koncu string-a. */
@@ -238,6 +268,67 @@ export class CalendarComponent implements OnInit {
     }
 
     return false;
+  }
+
+  preveriAliJeVnosVeljaven() : boolean{
+    if(this.leto > 0){
+      return true;
+    }
+    return false;
+  }
+
+  preveriAliJeVnosDatumaVeljaven() : boolean {
+    if(this.datumIzbira == ""){
+      return false;
+    }
+    var podatki = this.datumIzbira.split('.');
+    if(podatki.length < 3){
+      console.log("podatki ne valjaju");
+      return false;
+    }
+    var mesec = 0+podatki[1];
+    var leto = +podatki[2];
+    var izbraniDan = +podatki[0];
+    //septembar april jun novembar
+    if((mesec == null) || (+mesec < 1) || (+mesec > 12) || (leto == null) || (leto < 1) || 
+     (izbraniDan == null) || (izbraniDan < 1) || (izbraniDan > 31)){
+      console.log(mesec);
+       console.log("izbrani ne valjaju");
+        return false;
+    }
+
+    if(+mesec == 9 || +mesec == 4 || +mesec == 6 || +mesec == 11){
+      if(izbraniDan > 30){
+        console.log(mesec);
+        console.log("izbrani dan ne valja");
+        return false;
+      }
+    }
+
+    if((leto % 4 == 0) && (leto % 100 != 0) ||(leto % 400 == 0)){
+      if(izbraniDan > 29){
+        console.log("ovde ne valja");
+        return false;
+      }
+    }else{
+      if(izbraniDan > 28){
+        console.log("ovde ne vala2");
+        return false;
+      }
+    }
+
+    return true;
+    
+  }
+
+  preveriAliJeVnosLetaInMesecaVeljaven(){
+    if(this.leto == null || this.leto < 1 ){
+      return false;
+    }
+    if(this.mesec == null){
+      return false;
+    }
+    return true;
   }
 
 }

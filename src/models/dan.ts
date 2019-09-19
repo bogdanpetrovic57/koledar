@@ -5,4 +5,5 @@ export interface Dan{
     aliJePraznik: boolean;
     aliJeNedelja: boolean;
     aliJePrejsnjiMesec:boolean;
+    aliJeIzbran: boolean;
 }

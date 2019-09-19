@@ -5,7 +5,7 @@
   
 }
 
-.day-of-week{
+.danTeden{
 display: grid;
 grid-template-columns: repeat(7, 1fr);
 }
@@ -48,7 +48,7 @@ body{
     height: 1000px;
 }
 
-.day-of-week{
+.danTeden{
     margin-top: 20px;
 }
 
@@ -125,6 +125,14 @@ body{
     text-align: center;
     color:white;
 }
+.square-izbrani{
+    width: 210px;
+    height: 70px;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: lightgreen;
+    text-align: center;
+}
 
 .square-nedelja{
     width: 210px;
@@ -150,6 +158,7 @@ body{
 #legendaPrazniki{
     margin-left: 500px;
 }
+
 
 #legendaDnevi{
     margin-left: 100px;
@@ -196,11 +205,15 @@ small{
 }
 
 table{
-    margin-left: 700px;
+    margin-left: 1100px;
 }
 
 tr{
     margin-top: 10px;
+}
+
+h3{
+    margin-left: 45%
 }
 
 
