@@ -23,6 +23,9 @@ export class CalendarComponent implements OnInit {
     -boolean aliJePraznik
     -boolean aliJeNedelja
     -boolean aliJePrejsnjiMesec
+
+
+    Gumba "Potrdi" sta onemogočena dokler program ne potrdi veljavnost vnosov.
   */
 
 
