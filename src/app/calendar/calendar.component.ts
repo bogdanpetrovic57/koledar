@@ -32,7 +32,7 @@ export class CalendarComponent implements OnInit {
 
     Gumba "Potrdi" sta onemogočena dokler program ne potrdi veljavnost vnosov.
 
-
+    Program je objavljen na spletni strani https://app-koledar.herokuapp.com/ z uporabo Express strežnika.
   */
 
 
@@ -284,7 +284,7 @@ export class CalendarComponent implements OnInit {
   }
 
   /*V prvem vnosnem polju nam je pomembno ali je leto veljavno. Prvi gumb bo onemogočen vse dokler 
-    funkcija ne vrni true. */
+    funkcija ne vrne true. */
   preveriAliJeVnosVeljaven() : boolean{
     if(this.leto > 0){
       return true;
@@ -321,7 +321,6 @@ export class CalendarComponent implements OnInit {
 
     if((leto % 4 == 0) && (leto % 100 != 0) ||(leto % 400 == 0)){
       if(izbraniDan > 29){
-        console.log("ovde ne valja");
         return false;
       }
     }else{
