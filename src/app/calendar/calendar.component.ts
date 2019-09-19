@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   celoten datum. V drugemu primeru, ko program ve točen datum, se ta dan v mesecu obkroži z zeleno barvo.
    Ko ni uporabnikovega vnosa, koledar je skrit in se pokaže ko je gumb "Potrdi" aktiven.
 
+
    Ob aktiviranju koledarja nam se na vrhu strani pokaže gumb "Zapri koledar" ki zapre koledar.
 
   Za določanje dnevov sem naredil en model "Dan", ki v sebi hrani podatke :
@@ -83,7 +84,7 @@ export class CalendarComponent implements OnInit {
     this.dnevi = [];
   }
 
-  zapriKoledar(){
+  zapriKoledar() {
     this.jeIzbrano = false;
   }
 
@@ -96,16 +97,16 @@ export class CalendarComponent implements OnInit {
 
     this.dnevi = [];
     /*Izračunamo število dni določenega meseca v določenemu letu*/
-    this.mesec = ""+(+this.mesec);
+    this.mesec = '' + (+this.mesec);
     if(this.mesec == '1' || this.mesec == '3' || this.mesec == '5' 
-        || this.mesec == '7' || this.mesec == '8' || this.mesec == '10' || this.mesec =='12'){
+        || this.mesec == '7' || this.mesec == '8' || this.mesec == '10' || this.mesec =='12') {
       this.steviloDniVMesecu = 31;
 
     }else
     /*Vsako četrto leto je prestopno, s tem da je vsako 100-to leto prestopno samo v primeru če je deljivo z 400.
       Prestopnost leta se seveda odrazi samo na število dni v februarju.*/
     if(this.mesec === '2'){
-      if((this.leto % 4 === 0) && (this.leto % 100 !== 0) || (this.leto % 400 === 0)){
+      if((this.leto % 4 === 0) && (this.leto % 100 !== 0) || (this.leto % 400 === 0)) {
         this.steviloDniVMesecu = 29;
       }else{
         this.steviloDniVMesecu = 28;
@@ -141,8 +142,8 @@ export class CalendarComponent implements OnInit {
       }
       /*Dodamo v seznam*/
       this.dnevi.push(dan);
-      this.mesecZaIzpis = this.meseci[+this.mesec-1].charAt(0).toUpperCase() +
-        this.meseci[+this.mesec-1].slice(1);
+      this.mesecZaIzpis = this.meseci[+this.mesec - 1].charAt(0).toUpperCase() +
+        this.meseci[+this.mesec - 1].slice(1);
       this.letoZaIzpis = this.leto;
     }
 
@@ -150,7 +151,7 @@ export class CalendarComponent implements OnInit {
     var datum = new Date;
 
     datum.setDate(1);
-    datum.setMonth(this.mesecStevilka-1);
+    datum.setMonth(this.mesecStevilka - 1);
     datum.setFullYear(this.leto);
     this.danVTednu = datum.getDay();
 
@@ -235,7 +236,8 @@ export class CalendarComponent implements OnInit {
       this.izberi();
     
   }
-  /* Na začetku imamo pripravljen seznam stringov "prazniki". Iteriramo skozi seznam in preverjamo ali je 
+  /* V direktoriju "/assets" se nahaja datoteka z imenom "text.txt", v kateri se nahajajo prazniki.
+  Na začetku imamo pripravljen seznam stringov "prazniki". Iteriramo skozi seznam in preverjamo ali je 
     praznik ponavljajoč, kar je označeno z "*" na koncu string-a. */
   preveriAliJePraznik(dan : Dan) : boolean {
 
@@ -247,7 +249,6 @@ export class CalendarComponent implements OnInit {
        if(this.prazniki[i].split('.').length == 4){
          ponavljajoci = true;
        }
-       
        if(ponavljajoci == false){
          /* Praznik ni ponavljajoč. Da bi praznik lahko označili v koledarju, moramo preveriti ali 
           dan, mesec in leto ustrezajo podatkom iz seznama "prazniki".*/
@@ -273,7 +274,6 @@ export class CalendarComponent implements OnInit {
     datum.setMonth(+day.mesec - 1);
     datum.setFullYear(day.leto, +day.mesec - 1, day.danVMesecu);
 
-  
     /* Pri tipu Date, če nam metoda getDay() vrne 0, pomeni da je datum nedelja. To v funkciji ki kliče 
       preveriAliJeNedelja(day: Dan) ustrezno označimo v objektu.*/
     if(datum.getDay() == 0){
@@ -285,13 +285,17 @@ export class CalendarComponent implements OnInit {
 
   /*V prvem vnosnem polju nam je pomembno ali je leto veljavno. Prvi gumb bo onemogočen vse dokler 
     funkcija ne vrne true. */
-  preveriAliJeVnosVeljaven() : boolean{
-    if(this.leto > 0){
+
+    preveriAliJeVnosLetaInMesecaVeljaven(){
+      if(this.leto == null || this.leto < 1 ){
+        return false;
+      }
+      if(this.mesec == null){
+        return false;
+      }
       return true;
     }
-    return false;
-  }
-
+  
   /*Pri preverjanju drugega vnosnega polja, moramo preveriti ali so dan, mesec in leto veljavni. Kar se tiče meseca,
     moramo preveriti če je manjši od 1, ali večji od 12. Za dneve moramo preveriti ali je manjši od 0, ali večji od 31, če
     je mesec eden izmed mesecev ki vsebujejo 31 dni. V primeru da je mesec = 2, kar pomeni da je izbran februar,
@@ -331,15 +335,4 @@ export class CalendarComponent implements OnInit {
 
     return true;
   }
-
-  preveriAliJeVnosLetaInMesecaVeljaven(){
-    if(this.leto == null || this.leto < 1 ){
-      return false;
-    }
-    if(this.mesec == null){
-      return false;
-    }
-    return true;
-  }
-
 }
