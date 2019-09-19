@@ -27,13 +27,32 @@ export class CalendarComponent implements OnInit {
     -boolean aliJePraznik
     -boolean aliJeNedelja
     -boolean aliJePrejsnjiMesec
-    -boolean aliJeIzbran --ta boolean določi ali je pri vnosu datuma uporabnik izbral ta dan, kar bomo
-      označili z rumeno barvo.
+    -boolean aliJeIzbran (Ta boolean določi ali je pri vnosu datuma uporabnik izbral ta dan, kar bomo
+      označili z rumeno barvo.)
 
 
     Gumba "Potrdi" sta onemogočena dokler program ne potrdi veljavnost vnosov.
 
     Program je objavljen na spletni strani https://app-koledar.herokuapp.com/ z uporabo Express strežnika.
+
+
+    Za lažji pregled, vsebina datoteke text.txt je :
+    1.2.2019.*
+    8.2.2001
+    27.4.2002
+    25.6.2019
+    1.5.2019.*
+    2.5.2019.*
+    25.12.2000.*
+    1.5.2007
+    17.8.2000.*
+    2.7.2019
+    2.9.2014
+    2.7.2019
+    2.9.2007.*
+    23.11.2001.*
+    
+    Kje "*" na koncu pomeni da je praznik ponavljajoč.
   */
 
 
